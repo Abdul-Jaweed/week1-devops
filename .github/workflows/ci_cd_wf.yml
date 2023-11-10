@@ -29,12 +29,20 @@ jobs:
               run: |
                 python -m pytest -v tests
             
-            - name: Build coverage file
-              run: |
-              pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+            # - name: Build coverage file
+            #   run: |
+            #   pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
 
+            # - name: Pytest coverage comment
+            #   uses: MishaKav/pytest-coverage-comment@main
+            #   with:
+            #     pytest-xml-coverage-path: ./coverage.xml
+            
+            - name: Run tests
+              run: |
+                python -m pytest --cov=app
+    
             - name: Pytest coverage comment
               uses: MishaKav/pytest-coverage-comment@main
               with:
-                pytest-coverage-path: ./pytest-coverage.txt
-                junitxml-path: ./pytest.xml
+                pytest-xml-coverage-path: ./coverage.xml
